@@ -1,0 +1,16 @@
+{
+  "name": "one-day-future",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Один день в будущем — статический интерактивный MVP про технологии как голубые океаны возможностей.",
+  "scripts": {
+    "build": "bun run src/build.ts",
+    "test": "bun test test/future-day.test.ts",
+    "qa": "bun run scripts/qa-check.mjs"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "playwright": "^1.59.1"
+  }
+}
