@@ -26,8 +26,8 @@ html {
 body {
   margin: 0;
   background:
-    radial-gradient(circle at 18% 8%, rgba(72, 217, 255, 0.24), transparent 24rem),
-    radial-gradient(circle at 78% 28%, rgba(47, 128, 255, 0.2), transparent 34rem),
+    radial-gradient(circle at 18% 8%, color-mix(in srgb, var(--daily-accent, var(--cyan)) 30%, transparent), transparent 24rem),
+    radial-gradient(circle at 78% 28%, color-mix(in srgb, var(--daily-accent-2, var(--blue)) 24%, transparent), transparent 34rem),
     linear-gradient(180deg, var(--bg), var(--bg-2) 46%, #02050d);
   color: var(--text);
   min-width: 320px;
@@ -53,9 +53,10 @@ body::before {
 
 body::after {
   background: linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(0deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-  background-size: 96px 96px;
-  opacity: 0.12;
+  background-size: var(--daily-grid, 96px) var(--daily-grid, 96px);
+  opacity: calc(0.1 + (var(--daily-density, 0.8) * 0.06));
   mask-image: radial-gradient(circle at 50% 15%, black, transparent 58%);
+  transform: rotate(var(--daily-angle, 0deg)) scale(1.12);
 }
 
 .skip-link {
@@ -155,10 +156,26 @@ h2 {
 h1 {
   font-size: clamp(3.4rem, 10vw, 8rem);
   line-height: 0.88;
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.8rem;
   letter-spacing: -0.065em;
   word-spacing: 0.06em;
-  text-shadow: 0 0 54px rgba(72, 217, 255, 0.24);
+  text-shadow: 0 0 54px color-mix(in srgb, var(--daily-accent, var(--cyan)) 30%, transparent);
+}
+
+.daily-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 auto 1rem;
+  padding: 0.44rem 0.78rem;
+  border: 1px solid color-mix(in srgb, var(--daily-accent, var(--cyan)) 42%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--daily-accent, var(--cyan)) 12%, transparent);
+  color: color-mix(in srgb, var(--daily-accent, var(--cyan)) 86%, white);
+  font-size: 0.86rem;
+  font-weight: 800;
+  box-shadow: 0 0 24px color-mix(in srgb, var(--daily-accent, var(--cyan)) 14%, transparent);
 }
 
 h2 {

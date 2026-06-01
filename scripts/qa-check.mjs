@@ -23,7 +23,8 @@ await page.goto(url, { waitUntil: 'networkidle' });
 await page.screenshot({ path: `${outDir}/qa-desktop-initial.png`, fullPage: false });
 
 // Basic content and structure
-assert(await page.locator('h1', { hasText: 'Один день в будущем' }).count() === 1, 'critical', 'Hero title missing or duplicated');
+assert(await page.locator('#hero-title').count() === 1, 'critical', 'Hero title missing or duplicated');
+assert((await page.locator('[data-daily-badge]').count()) === 1, 'high', 'Daily mood badge missing');
 assert(await page.locator('section.scene').count() === 6, 'critical', 'Expected exactly 6 scenes');
 assert(await page.locator('[data-hotspot-button]').count() === 18, 'critical', 'Expected exactly 18 hotspot buttons');
 assert(await page.locator('[data-hotspot-card]').count() === 18, 'critical', 'Expected exactly 18 hotspot cards');

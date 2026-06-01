@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { futureDayContent } from "../src/content";
 import { renderPage } from "../src/render";
+import { createDailyVariation, dateKeyUtc, dailyVariationPresets } from "../src/daily-variation.js";
 
 describe("Один день в будущем MVP content contract", () => {
   test("has hero, exactly six scenes, and the final blue-ocean thesis", () => {
@@ -29,6 +30,34 @@ describe("Один день в будущем MVP content contract", () => {
   });
 });
 
+describe("daily variation engine", () => {
+  test("uses a stable UTC date key so every visitor sees the same day variant", () => {
+    expect(dateKeyUtc(new Date("2026-06-01T00:30:00Z"))).toBe("2026-06-01");
+    expect(dateKeyUtc(new Date("2026-06-01T23:59:59Z"))).toBe("2026-06-01");
+    expect(dateKeyUtc(new Date("2026-06-02T00:00:00Z"))).toBe("2026-06-02");
+  });
+
+  test("produces deterministic but visibly different variants for adjacent days", () => {
+    const first = createDailyVariation(new Date("2026-06-01T12:00:00Z"));
+    const second = createDailyVariation(new Date("2026-06-02T12:00:00Z"));
+
+    expect(first.dateKey).toBe("2026-06-01");
+    expect(second.dateKey).toBe("2026-06-02");
+    expect(first.preset.name).not.toBe(second.preset.name);
+    expect(first.heroTitle).not.toBe(second.heroTitle);
+    expect(first.sceneOrder.join(",")).not.toBe(second.sceneOrder.join(","));
+  });
+
+  test("has enough daily presets to avoid repeating the same visual mood for weeks", () => {
+    expect(dailyVariationPresets.length).toBeGreaterThanOrEqual(14);
+    for (const preset of dailyVariationPresets) {
+      expect(preset.name.length).toBeGreaterThan(3);
+      expect(preset.accent).toMatch(/^#[0-9a-f]{6}$/i);
+      expect(preset.heroTitle.length).toBeGreaterThan(10);
+    }
+  });
+});
+
 describe("Один день в будущем MVP rendered page", () => {
   const html = renderPage(futureDayContent);
 
@@ -39,7 +68,7 @@ describe("Один день в будущем MVP rendered page", () => {
     expect(html).toContain('aria-controls="hotspot-');
   });
 
-  test("supports the required interactions and motion/accessibility hooks", () => {
+  test("supports the required interactions, daily variation module, and motion/accessibility hooks", () => {
     expect(html).toContain("app.js");
     expect(html).toContain("styles.css");
     expect(html).toContain("Начать день");

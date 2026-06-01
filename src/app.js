@@ -1,3 +1,7 @@
+import { applyDailyVariation } from "./daily-variation.js";
+
+applyDailyVariation();
+
 const closeAllHotspots = () => {
   document.querySelectorAll("[data-hotspot-button]").forEach((button) => {
     button.setAttribute("aria-expanded", "false");
