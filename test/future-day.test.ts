@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, test } from "bun:test";
 import { futureDayContent } from "../src/content";
 import { renderPage } from "../src/render";
@@ -107,8 +108,8 @@ describe("Один день в будущем MVP rendered page", () => {
   });
 
   test("supports the required interactions, daily variation module, and motion/accessibility hooks", () => {
-    expect(html).toContain("styles.css?v=20260601-kinetic-blocks");
-    expect(html).toContain("app.js?v=20260601-kinetic-blocks");
+    expect(html).toContain("styles.css?v=20260601-smooth-blocks");
+    expect(html).toContain("app.js?v=20260601-smooth-blocks");
     expect(html).toContain("Начать день");
     expect(html).toContain("Поделиться сайтом");
     expect(html).toContain("Начать путешествие заново");
@@ -118,6 +119,16 @@ describe("Один день в будущем MVP rendered page", () => {
     expect(html).toContain("data-live-site-shell");
     expect(html).toContain("data-live-constructor");
     expect(html).toContain("constructor-rig");
+  });
+
+  test("uses smooth FLIP-like motion instead of jumpy reorder snaps", () => {
+    const appSource = readFileSync(new URL("../src/app.js", import.meta.url), "utf8");
+    const cssSource = readFileSync(new URL("../src/styles.css", import.meta.url), "utf8");
+
+    expect(appSource).toContain("animateSmoothLayout");
+    expect(appSource).toContain("requestAnimationFrame");
+    expect(appSource).not.toContain("style.order =");
+    expect(cssSource).toContain("transition: transform 1600ms cubic-bezier(.16, 1, .3, 1)");
   });
 
   test("does not introduce out-of-scope backend, accounts, canvas, or 3D dependencies", () => {

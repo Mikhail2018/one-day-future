@@ -1,4 +1,4 @@
-import { applyDailyVariation } from "./daily-variation.js?v=20260601-kinetic-blocks";
+import { applyDailyVariation } from "./daily-variation.js?v=20260601-smooth-blocks";
 
 applyDailyVariation();
 
@@ -142,37 +142,71 @@ const activateLiveConstructor = () => {
     block.style.setProperty("--block-lane", String(index % 4));
   });
 
+  const animateSmoothLayout = (nodes, mutate) => {
+    nodes.forEach((node) => {
+      const rect = node.getBoundingClientRect();
+      node.dataset.prevX = String(rect.left);
+      node.dataset.prevY = String(rect.top);
+      node.style.transition = "none";
+    });
+
+    mutate();
+
+    nodes.forEach((node) => {
+      const rect = node.getBoundingClientRect();
+      const dx = Number(node.dataset.prevX || rect.left) - rect.left;
+      const dy = Number(node.dataset.prevY || rect.top) - rect.top;
+      node.style.setProperty("--flip-x", `${dx}px`);
+      node.style.setProperty("--flip-y", `${dy}px`);
+      node.classList.add("is-flipping");
+      void node.offsetHeight;
+    });
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        nodes.forEach((node) => {
+          node.style.transition = "";
+          node.style.setProperty("--flip-x", "0px");
+          node.style.setProperty("--flip-y", "0px");
+          window.setTimeout(() => node.classList.remove("is-flipping"), 1700);
+        });
+      });
+    });
+  };
+
   let tick = 0;
   const rebuild = () => {
     tick += 1;
-    const layout = gridLayouts[tick % gridLayouts.length];
-    document.body.dataset.constructorLayout = layout;
-    status.textContent = constructorMessages[tick % constructorMessages.length];
-    shell.dataset.liveTick = String(tick % 100);
-
     const scenes = [...document.querySelectorAll(".scene")];
     const activeIndex = tick % scenes.length;
-    heroPieces.forEach((piece, index) => {
-      const direction = (index + tick) % 2 === 0 ? 1 : -1;
-      piece.style.setProperty("--piece-shift", `${direction * (8 + ((tick + index) % 3) * 8)}px`);
-      piece.style.setProperty("--piece-lift", `${((tick + index) % 3 - 1) * 8}px`);
-      piece.classList.toggle("is-kinetic", (index + tick) % 3 === 0);
-    });
-    scenes.forEach((scene, index) => {
-      scene.style.order = String((index + tick) % scenes.length);
-    });
-    scenes.forEach((scene, index) => {
-      const phase = (index + tick) % 5;
-      scene.style.setProperty("--dock-x", `${(phase - 2) * 3.2}rem`);
-      scene.style.setProperty("--dock-y", `${((phase % 3) - 1) * 2.4}rem`);
-      scene.style.setProperty("--tilt", `${(phase - 2) * 1.6}deg`);
-      scene.classList.toggle("is-docking", index === activeIndex);
-      scene.classList.toggle("is-receding", (index + tick) % 4 === 0);
+
+    animateSmoothLayout([...heroPieces, ...scenes], () => {
+      const layout = gridLayouts[tick % gridLayouts.length];
+      document.body.dataset.constructorLayout = layout;
+      status.textContent = constructorMessages[tick % constructorMessages.length];
+      shell.dataset.liveTick = String(tick % 100);
+
+      heroPieces.forEach((piece, index) => {
+        const direction = (index + tick) % 2 === 0 ? 1 : -1;
+        piece.style.setProperty("--piece-shift", `${direction * (4 + ((tick + index) % 3) * 5)}px`);
+        piece.style.setProperty("--piece-lift", `${((tick + index) % 3 - 1) * 5}px`);
+        piece.classList.toggle("is-kinetic", (index + tick) % 3 === 0);
+      });
+
+      scenes.forEach((scene, index) => {
+        const phase = (index + tick) % 5;
+        scene.style.setProperty("--dock-x", `${(phase - 2) * 1.35}rem`);
+        scene.style.setProperty("--dock-y", `${((phase % 3) - 1) * 0.9}rem`);
+        scene.style.setProperty("--tilt", `${(phase - 2) * 0.55}deg`);
+        scene.style.setProperty("--flow", String((phase + tick) % 6));
+        scene.classList.toggle("is-docking", index === activeIndex);
+        scene.classList.toggle("is-receding", (index + tick) % 4 === 0);
+      });
     });
   };
 
   rebuild();
-  setInterval(rebuild, 2300);
+  setInterval(rebuild, 5200);
 };
 
 activateLiveConstructor();

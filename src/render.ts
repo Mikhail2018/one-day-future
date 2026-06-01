@@ -63,8 +63,8 @@ export const renderPage = (content: FutureDayContent): string => `<!doctype html
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="${escapeHtml(content.hero.lead)}" />
   <title>${escapeHtml(content.hero.title)}</title>
-  <link rel="stylesheet" href="styles.css?v=20260601-kinetic-blocks" />
-  <script type="module" src="app.js?v=20260601-kinetic-blocks"></script>
+  <link rel="stylesheet" href="styles.css?v=20260601-smooth-blocks" />
+  <script type="module" src="app.js?v=20260601-smooth-blocks"></script>
 </head>
 <body>
   <a class="skip-link" href="#story">Перейти к истории</a>
