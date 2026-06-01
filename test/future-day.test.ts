@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { futureDayContent } from "../src/content";
 import { renderPage } from "../src/render";
-import { createDailyVariation, dateKeyUtc, dailyVariationPresets } from "../src/daily-variation.js";
+import { createDailyVariation, dateKeyUtc, dailyThemePacks, dailyVariationPresets } from "../src/daily-variation.js";
 
 describe("Один день в будущем MVP content contract", () => {
   test("has hero, exactly six scenes, and the final blue-ocean thesis", () => {
@@ -54,6 +54,33 @@ describe("daily variation engine", () => {
       expect(preset.name.length).toBeGreaterThan(3);
       expect(preset.accent).toMatch(/^#[0-9a-f]{6}$/i);
       expect(preset.heroTitle.length).toBeGreaterThan(10);
+    }
+  });
+
+  test("changes the story theme, not only colors, on adjacent days", () => {
+    const first = createDailyVariation(new Date("2026-06-01T12:00:00Z"));
+    const second = createDailyVariation(new Date("2026-06-02T12:00:00Z"));
+
+    expect(first.theme.name).not.toBe(second.theme.name);
+    expect(first.theme.eyebrow).not.toBe(second.theme.eyebrow);
+    expect(first.heroLead).not.toBe(second.heroLead);
+    expect(first.sceneCopy.morning.headline).not.toBe(second.sceneCopy.morning.headline);
+    expect(first.finalQuestion).not.toBe(second.finalQuestion);
+  });
+
+  test("has enough full theme packs with copy for every scene", () => {
+    expect(dailyThemePacks.length).toBeGreaterThanOrEqual(10);
+    for (const theme of dailyThemePacks) {
+      expect(theme.name.length).toBeGreaterThan(3);
+      expect(theme.eyebrow.length).toBeGreaterThan(10);
+      expect(theme.heroLead.length).toBeGreaterThan(40);
+      expect(theme.finalQuestion.length).toBeGreaterThan(15);
+      expect(Object.keys(theme.scenes).sort()).toEqual(["creation", "evening", "learning", "morning", "safety", "work"]);
+      for (const scene of Object.values(theme.scenes)) {
+        expect(scene.headline.length).toBeGreaterThan(10);
+        expect(scene.body.length).toBeGreaterThan(30);
+        expect(scene.visual.length).toBeGreaterThan(20);
+      }
     }
   });
 });
