@@ -107,7 +107,7 @@ describe("Один день в будущем MVP rendered page", () => {
   });
 
   test("supports the required interactions, daily variation module, and motion/accessibility hooks", () => {
-    expect(html).toContain("app.js");
+    expect(html).toContain("app.js?v=20260601-full-identity");
     expect(html).toContain("styles.css");
     expect(html).toContain("Начать день");
     expect(html).toContain("Поделиться сайтом");

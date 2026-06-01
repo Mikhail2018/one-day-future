@@ -64,7 +64,7 @@ export const renderPage = (content: FutureDayContent): string => `<!doctype html
   <meta name="description" content="${escapeHtml(content.hero.lead)}" />
   <title>${escapeHtml(content.hero.title)}</title>
   <link rel="stylesheet" href="styles.css" />
-  <script type="module" src="app.js"></script>
+  <script type="module" src="app.js?v=20260601-full-identity"></script>
 </head>
 <body>
   <a class="skip-link" href="#story">Перейти к истории</a>

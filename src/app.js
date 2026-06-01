@@ -1,4 +1,4 @@
-import { applyDailyVariation } from "./daily-variation.js";
+import { applyDailyVariation } from "./daily-variation.js?v=20260601-full-identity";
 
 applyDailyVariation();
 
