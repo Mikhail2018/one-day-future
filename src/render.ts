@@ -64,13 +64,20 @@ export const renderPage = (content: FutureDayContent): string => `<!doctype html
   <meta name="description" content="${escapeHtml(content.hero.lead)}" />
   <title>${escapeHtml(content.hero.title)}</title>
   <link rel="stylesheet" href="styles.css" />
-  <script type="module" src="app.js?v=20260601-full-identity"></script>
+  <script type="module" src="app.js?v=20260601-live-constructor"></script>
 </head>
 <body>
   <a class="skip-link" href="#story">Перейти к истории</a>
-  <main>
+  <main data-live-site-shell>
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__backdrop" aria-hidden="true"></div>
+      <div class="constructor-rig" data-live-constructor aria-hidden="true">
+        <div class="rig-line rig-line--one"></div>
+        <div class="rig-line rig-line--two"></div>
+        <div class="rig-node rig-node--a"></div>
+        <div class="rig-node rig-node--b"></div>
+        <div class="rig-node rig-node--c"></div>
+      </div>
       <p class="eyebrow">Интерактивное путешествие в будущее</p>
       <h1 id="hero-title">${escapeHtml(content.hero.title)}</h1>
       <p class="hero__subtitle">${escapeHtml(content.hero.subtitle)}</p>

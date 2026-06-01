@@ -107,11 +107,17 @@ describe("Один день в будущем MVP rendered page", () => {
   });
 
   test("supports the required interactions, daily variation module, and motion/accessibility hooks", () => {
-    expect(html).toContain("app.js?v=20260601-full-identity");
+    expect(html).toContain("app.js?v=20260601-live-constructor");
     expect(html).toContain("styles.css");
     expect(html).toContain("Начать день");
     expect(html).toContain("Поделиться сайтом");
     expect(html).toContain("Начать путешествие заново");
+  });
+
+  test("renders live cyberpunk constructor hooks for continuous page rebuild", () => {
+    expect(html).toContain("data-live-site-shell");
+    expect(html).toContain("data-live-constructor");
+    expect(html).toContain("constructor-rig");
   });
 
   test("does not introduce out-of-scope backend, accounts, canvas, or 3D dependencies", () => {
