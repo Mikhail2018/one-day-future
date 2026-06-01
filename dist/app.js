@@ -1,4 +1,4 @@
-import { applyDailyVariation } from "./daily-variation.js?v=20260601-block-constructor";
+import { applyDailyVariation } from "./daily-variation.js?v=20260601-kinetic-blocks";
 
 applyDailyVariation();
 
@@ -130,6 +130,11 @@ const activateLiveConstructor = () => {
   shell.prepend(status);
 
   const blocks = [...document.querySelectorAll(".hero, .scene, .final")];
+  const heroPieces = [...document.querySelectorAll(".hero > .eyebrow, .hero > h1, .hero > .daily-badge, .hero > .hero__subtitle, .hero > .hero__lead, .hero > .primary-cta")];
+  heroPieces.forEach((piece, index) => {
+    piece.classList.add("kinetic-hero-block");
+    piece.style.setProperty("--piece-index", String(index));
+  });
   blocks.forEach((block, index) => {
     block.classList.add("constructor-block");
     block.dataset.constructorBlock = "";
@@ -147,18 +152,27 @@ const activateLiveConstructor = () => {
 
     const scenes = [...document.querySelectorAll(".scene")];
     const activeIndex = tick % scenes.length;
+    heroPieces.forEach((piece, index) => {
+      const direction = (index + tick) % 2 === 0 ? 1 : -1;
+      piece.style.setProperty("--piece-shift", `${direction * (8 + ((tick + index) % 3) * 8)}px`);
+      piece.style.setProperty("--piece-lift", `${((tick + index) % 3 - 1) * 8}px`);
+      piece.classList.toggle("is-kinetic", (index + tick) % 3 === 0);
+    });
+    scenes.forEach((scene, index) => {
+      scene.style.order = String((index + tick) % scenes.length);
+    });
     scenes.forEach((scene, index) => {
       const phase = (index + tick) % 5;
-      scene.style.setProperty("--dock-x", `${(phase - 2) * 1.1}rem`);
-      scene.style.setProperty("--dock-y", `${((phase % 3) - 1) * 0.8}rem`);
-      scene.style.setProperty("--tilt", `${(phase - 2) * 0.45}deg`);
+      scene.style.setProperty("--dock-x", `${(phase - 2) * 3.2}rem`);
+      scene.style.setProperty("--dock-y", `${((phase % 3) - 1) * 2.4}rem`);
+      scene.style.setProperty("--tilt", `${(phase - 2) * 1.6}deg`);
       scene.classList.toggle("is-docking", index === activeIndex);
       scene.classList.toggle("is-receding", (index + tick) % 4 === 0);
     });
   };
 
   rebuild();
-  setInterval(rebuild, 4200);
+  setInterval(rebuild, 2300);
 };
 
 activateLiveConstructor();

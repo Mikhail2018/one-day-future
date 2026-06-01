@@ -58,7 +58,7 @@ await page.screenshot({ path: `${outDir}/qa-desktop-after-hotspots.png`, fullPag
 
 // Check close button path separately.
 await page.locator('[data-hotspot-button]').first().click();
-await page.locator('[data-close-hotspot]').first().click();
+await page.locator('[data-hotspot-card]:not([hidden]) [data-close-hotspot]').click();
 assert(await page.locator('[data-hotspot-card]:not([hidden])').count() === 0, 'high', 'Hotspot close button does not close card');
 
 // Share fallback path: force no navigator.share, mock clipboard.

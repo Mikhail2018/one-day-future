@@ -600,6 +600,54 @@ body.is-block-constructor .final {
 
 body.is-block-constructor .hero {
   border-bottom: 1px solid rgba(0, 255, 209, 0.22);
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(18rem, 1.28fr);
+  align-content: center;
+  align-items: center;
+  gap: clamp(0.8rem, 2vw, 1.4rem);
+}
+
+body.is-block-constructor .hero .hero__backdrop,
+body.is-block-constructor .hero .constructor-rig {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+body.is-block-constructor .kinetic-hero-block {
+  position: relative;
+  z-index: 2;
+  margin-inline: 0;
+  max-width: none;
+  padding: clamp(0.75rem, 1.5vw, 1.1rem);
+  border: 1px solid rgba(0, 255, 209, 0.16);
+  border-radius: clamp(0.9rem, 1.6vw, 1.4rem);
+  background: rgba(4, 7, 18, 0.52);
+  box-shadow: 0 16px 52px rgba(0,0,0,0.28), inset 0 0 28px rgba(0,255,209,0.04);
+  transform: translate3d(var(--piece-shift, 0), var(--piece-lift, 0), 0);
+  transition: transform 760ms cubic-bezier(.2,.9,.2,1), border-color 760ms ease, box-shadow 760ms ease;
+}
+
+body.is-block-constructor .kinetic-hero-block:nth-of-type(odd) {
+  grid-column: 1 / 2;
+}
+
+body.is-block-constructor .kinetic-hero-block:nth-of-type(even) {
+  grid-column: 2 / 3;
+}
+
+body.is-block-constructor .kinetic-hero-block.is-kinetic {
+  border-color: rgba(255, 43, 214, 0.42);
+  box-shadow: 0 20px 70px rgba(255,43,214,0.12), inset 0 0 38px rgba(255,43,214,0.08);
+}
+
+body.is-block-constructor #hero-title {
+  grid-column: 1 / -1;
+  width: min(100%, 1180px);
+  font-size: clamp(4.2rem, 9.8vw, 9.2rem);
+}
+
+body.is-block-constructor .hero__lead {
+  grid-column: 1 / -1;
 }
 
 body.is-block-constructor .hero::before,
@@ -638,10 +686,12 @@ body.is-block-constructor .scene {
   transition:
     transform 850ms cubic-bezier(.2,.9,.2,1),
     grid-column 850ms ease,
+    min-height 850ms ease,
     filter 850ms ease,
     opacity 850ms ease,
     border-color 850ms ease,
     box-shadow 850ms ease;
+  animation: blockBreathing 5.8s ease-in-out infinite;
 }
 
 body.is-block-constructor .scene:nth-child(3n + 1) { grid-column: span 7; }
@@ -727,6 +777,22 @@ body.is-block-constructor .final {
 
 @keyframes constructorCityDrift {
   to { background-position: 260px 260px, -310px 310px, 88px 0; }
+}
+
+@keyframes blockBreathing {
+  0%, 100% { background-position: 0 0; }
+  50% { background-position: 48px -28px; }
+}
+
+@media (max-width: 960px) {
+  body.is-block-constructor .hero {
+    grid-template-columns: 1fr;
+  }
+
+  body.is-block-constructor .kinetic-hero-block,
+  body.is-block-constructor .kinetic-hero-block:nth-of-type(n) {
+    grid-column: 1;
+  }
 }
 
 @media (max-width: 960px) {
