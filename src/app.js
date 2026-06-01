@@ -1,4 +1,4 @@
-import { applyDailyVariation } from "./daily-variation.js?v=20260601-live-constructor";
+import { applyDailyVariation } from "./daily-variation.js?v=20260601-block-constructor";
 
 applyDailyVariation();
 
@@ -16,7 +16,9 @@ const openHotspot = (button) => {
   const card = cardId ? document.getElementById(cardId) : null;
   const isOpen = button.getAttribute("aria-expanded") === "true";
   closeAllHotspots();
+  document.body.classList.remove("has-open-hotspot");
   if (!isOpen && card) {
+    document.body.classList.add("has-open-hotspot");
     button.setAttribute("aria-expanded", "true");
     card.removeAttribute("hidden");
     card.querySelector("[data-close-hotspot]")?.focus({ preventScroll: true });
@@ -32,17 +34,20 @@ document.addEventListener("click", (event) => {
 
   if (event.target.closest?.("[data-close-hotspot]")) {
     closeAllHotspots();
+    document.body.classList.remove("has-open-hotspot");
     return;
   }
 
   if (!event.target.closest?.(".hotspot-card") && !event.target.closest?.("[data-hotspot-button]")) {
     closeAllHotspots();
+    document.body.classList.remove("has-open-hotspot");
   }
 });
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeAllHotspots();
+    document.body.classList.remove("has-open-hotspot");
   }
 });
 
@@ -98,95 +103,62 @@ if ("IntersectionObserver" in window) {
 }
 
 const constructorMessages = [
-  "NEON MODULE INBOUND",
-  "STORY GRID REBUILT",
-  "CYBERPUNK LAYOUT SHIFT",
-  "NEW BLOCK DOCKED",
-  "SIGNAL ROUTED",
-  "INTERFACE MUTATION",
+  "UI GRID SPLIT",
+  "BLOCKS REDOCKING",
+  "SECTION RECOMPOSED",
+  "LAYOUT MUTATION",
+  "READING PATH REWIRED",
+  "CYBERPUNK CONSTRUCTOR ACTIVE",
 ];
 
-const moduleTitles = [
-  "Слой города",
-  "Слой памяти",
-  "Слой маршрута",
-  "Слой риска",
-  "Слой энергии",
-  "Слой выбора",
-  "Слой прототипа",
-  "Слой сигнала",
-];
-
-const moduleBodies = [
-  "панель перестраивает маршрут чтения",
-  "неоновый блок приезжает поверх старой сетки",
-  "система меняет акцент, пока ты скроллишь",
-  "конструктор собирает новую связку смыслов",
-  "модуль уезжает за край и возвращается другим",
-  "городская схема подстраивается под внимание",
-];
-
-const createLiveModule = (index) => {
-  const module = document.createElement("aside");
-  module.className = "live-module";
-  module.dataset.liveModule = "";
-  module.style.setProperty("--module-lane", String(index % 6));
-  module.style.setProperty("--module-delay", `${(index % 5) * 0.35}s`);
-  module.innerHTML = `
-    <span class="live-module__code">${String(index + 1).padStart(2, "0")}</span>
-    <strong>${moduleTitles[index % moduleTitles.length]}</strong>
-    <span>${moduleBodies[index % moduleBodies.length]}</span>
-  `;
-  return module;
-};
+const gridLayouts = ["metro", "tower", "market", "split", "stack"];
 
 const activateLiveConstructor = () => {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   const shell = document.querySelector("[data-live-site-shell]");
-  const rig = document.querySelector("[data-live-constructor]");
-  if (!shell || !rig) return;
+  const story = document.querySelector(".story");
+  if (!shell || !story) return;
 
-  document.body.classList.add("is-live-constructor");
+  document.body.classList.add("is-block-constructor");
 
   const status = document.createElement("div");
-  status.className = "live-status";
+  status.className = "constructor-status";
   status.setAttribute("aria-live", "polite");
   status.dataset.liveStatus = "";
-  status.textContent = "LIVE CONSTRUCTOR ONLINE";
+  status.textContent = "CYBERPUNK CONSTRUCTOR ACTIVE";
   shell.prepend(status);
 
-  const moduleRail = document.createElement("div");
-  moduleRail.className = "live-module-rail";
-  moduleRail.setAttribute("aria-hidden", "true");
-  moduleRail.dataset.liveModuleRail = "";
-  shell.append(moduleRail);
-
-  for (let index = 0; index < 10; index += 1) {
-    moduleRail.append(createLiveModule(index));
-  }
-
-  const morphScene = (scene, index) => {
-    scene.classList.add("is-live-scene");
-    scene.style.setProperty("--scene-lane", String(index % 4));
-  };
-
-  document.querySelectorAll(".scene").forEach(morphScene);
+  const blocks = [...document.querySelectorAll(".hero, .scene, .final")];
+  blocks.forEach((block, index) => {
+    block.classList.add("constructor-block");
+    block.dataset.constructorBlock = "";
+    block.style.setProperty("--block-index", String(index));
+    block.style.setProperty("--block-lane", String(index % 4));
+  });
 
   let tick = 0;
-  setInterval(() => {
+  const rebuild = () => {
     tick += 1;
+    const layout = gridLayouts[tick % gridLayouts.length];
+    document.body.dataset.constructorLayout = layout;
     status.textContent = constructorMessages[tick % constructorMessages.length];
     shell.dataset.liveTick = String(tick % 100);
 
     const scenes = [...document.querySelectorAll(".scene")];
-    const activeScene = scenes[tick % scenes.length];
-    scenes.forEach((scene) => scene.classList.toggle("is-assembling", scene === activeScene));
+    const activeIndex = tick % scenes.length;
+    scenes.forEach((scene, index) => {
+      const phase = (index + tick) % 5;
+      scene.style.setProperty("--dock-x", `${(phase - 2) * 1.1}rem`);
+      scene.style.setProperty("--dock-y", `${((phase % 3) - 1) * 0.8}rem`);
+      scene.style.setProperty("--tilt", `${(phase - 2) * 0.45}deg`);
+      scene.classList.toggle("is-docking", index === activeIndex);
+      scene.classList.toggle("is-receding", (index + tick) % 4 === 0);
+    });
+  };
 
-    const retiring = moduleRail.querySelector("[data-live-module]");
-    if (retiring) retiring.remove();
-    moduleRail.append(createLiveModule(tick + 10));
-  }, 3600);
+  rebuild();
+  setInterval(rebuild, 4200);
 };
 
 activateLiveConstructor();
