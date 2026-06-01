@@ -285,6 +285,110 @@ export const dailyThemePacks = [
   },
 ];
 
+
+const themeIdentity = {
+  "Космическая экспедиция": {
+    siteTitle: "Космическая экспедиция одного дня",
+    subtitle: "Сегодня это не сайт про будущее, а маршрут орбитальной миссии.",
+    finalTitle: "Новая орбита — это не технология.",
+    finalBody: "ИИ, облако, данные и безопасность здесь работают как экипаж: помогают выбрать траекторию, сохранить ресурс и увидеть следующий манёвр.",
+    finalNavLabel: "Орбита",
+    primaryCta: "Начать экспедицию ↓",
+    restartCta: "Вернуться на стартовую площадку",
+  },
+  "Умный город": {
+    siteTitle: "Один день в городе, который думает",
+    subtitle: "Сегодня сайт становится живым городским маршрутом.",
+    finalTitle: "Город возможностей — это не набор гаджетов.",
+    finalBody: "Главная ценность умной среды — не датчики и панели, а меньше хаоса, больше доверия и свободный путь для человеческих решений.",
+    finalNavLabel: "Город",
+    primaryCta: "Войти в город ↓",
+    restartCta: "Вернуться к главной улице",
+  },
+  "Океан возможностей": {
+    siteTitle: "Плавание по океану возможностей",
+    subtitle: "Сегодня сайт превращается в морскую карту новых направлений.",
+    finalTitle: "Голубой океан начинается с нового курса.",
+    finalBody: "Технологии здесь не цель, а корабль, компас и маяк: они помогают увидеть острова возможностей, которых вчера не было на карте.",
+    finalNavLabel: "Горизонт",
+    primaryCta: "Выйти в море ↓",
+    restartCta: "Вернуться в порт",
+  },
+  "Личная лаборатория": {
+    siteTitle: "Личная лаборатория будущего",
+    subtitle: "Сегодня сайт — серия экспериментов с жизнью, вниманием и идеями.",
+    finalTitle: "Будущее доказывается маленькими опытами.",
+    finalBody: "Самое важное — не выглядеть футуристично, а проверить гипотезу: что даёт больше ясности, энергии, свободы и безопасности уже сегодня.",
+    finalNavLabel: "Вывод",
+    primaryCta: "Начать эксперимент ↓",
+    restartCta: "Повторить опыт",
+  },
+  "Сад будущего": {
+    siteTitle: "Сад будущего, который растёт каждый день",
+    subtitle: "Сегодня сайт — живая экосистема привычек, идей и защиты.",
+    finalTitle: "Новые возможности нужно выращивать.",
+    finalBody: "ИИ, данные и автоматизация становятся полезными, когда помогают посадить маленькое действие и превратить его в устойчивую привычку.",
+    finalNavLabel: "Сад",
+    primaryCta: "Пойти по тропинке ↓",
+    restartCta: "Вернуться к первому ростку",
+  },
+  "Кино одного дня": {
+    siteTitle: "Кино одного дня о будущем",
+    subtitle: "Сегодня сайт играет как интерактивный фильм.",
+    finalTitle: "Главная сцена — не про технологии.",
+    finalBody: "Технологии остаются за кадром, когда работают правильно: они помогают смонтировать день яснее, быстрее и человечнее.",
+    finalNavLabel: "Финал",
+    primaryCta: "Запустить фильм ↓",
+    restartCta: "Переснять первый кадр",
+  },
+  "Путешествие во времени": {
+    siteTitle: "Путешествие по временной линии",
+    subtitle: "Сегодня сайт показывает, как маленькие решения меняют завтра.",
+    finalTitle: "Будущее меняется в точке выбора.",
+    finalBody: "ИИ и данные помогают увидеть последствия раньше: не чтобы предсказать всё, а чтобы выбрать более сильную временную линию.",
+    finalNavLabel: "Завтра",
+    primaryCta: "Открыть временную линию ↓",
+    restartCta: "Вернуться в начало линии",
+  },
+  "Дом будущего": {
+    siteTitle: "Дом будущего вокруг человека",
+    subtitle: "Сегодня сайт — не витрина гаджетов, а живая среда спокойствия.",
+    finalTitle: "Умный дом начинается с человеческого ритма.",
+    finalBody: "Будущее дома — это когда технологии освобождают внимание, защищают личное пространство и возвращают человеку вечер.",
+    finalNavLabel: "Дом",
+    primaryCta: "Войти в дом ↓",
+    restartCta: "Вернуться к двери",
+  },
+  "Школа будущего": {
+    siteTitle: "Школа будущего на один день",
+    subtitle: "Сегодня весь сайт — урок о навыках, свободе и самостоятельности.",
+    finalTitle: "Главная оценка — больше самостоятельности.",
+    finalBody: "Технологии хороши не тогда, когда заменяют мышление, а когда дают человеку новый навык, новый пример и смелость действовать.",
+    finalNavLabel: "Навык",
+    primaryCta: "Начать урок ↓",
+    restartCta: "Вернуться к первому уроку",
+  },
+  "Экономика возможностей": {
+    siteTitle: "Экономика возможностей одного дня",
+    subtitle: "Сегодня сайт — карта личных рынков, рычагов и новых ниш.",
+    finalTitle: "Голубой океан — это созданная возможность.",
+    finalBody: "Когда инструменты становятся доступнее, важнее не догонять чужие рынки, а создавать свой маленький рынок вокруг сильной идеи.",
+    finalNavLabel: "Рынок",
+    primaryCta: "Открыть возможность ↓",
+    restartCta: "Вернуться к первой идее",
+  },
+};
+
+const identityFor = (theme) => themeIdentity[theme.name] ?? {
+  siteTitle: theme.name,
+  subtitle: theme.eyebrow,
+  finalTitle: `${theme.name}: новый финал дня`,
+  finalBody: theme.heroLead,
+  finalNavLabel: "Финал",
+  primaryCta: "Начать маршрут ↓",
+  restartCta: "Начать заново",
+};
+
 const sceneIds = ["morning", "work", "learning", "creation", "safety", "evening"];
 
 export const dateKeyUtc = (date = new Date()) => {
@@ -310,6 +414,7 @@ export const createDailyVariation = (date = new Date()) => {
   const hash = hashString(dateKey);
   const preset = dailyVariationPresets[hash % dailyVariationPresets.length];
   const theme = dailyThemePacks[(hash >>> 3) % dailyThemePacks.length];
+  const identity = identityFor(theme);
   const sceneOffset = 1 + (hash % (sceneIds.length - 1));
   const sceneOrder = rotate(sceneIds, sceneOffset);
 
@@ -317,12 +422,19 @@ export const createDailyVariation = (date = new Date()) => {
     dateKey,
     preset,
     theme,
-    heroTitle: preset.heroTitle,
-    heroSubtitle: preset.subtitle,
+    identity,
+    siteTitle: identity.siteTitle,
+    heroTitle: identity.siteTitle,
+    heroSubtitle: identity.subtitle,
     heroLead: theme.heroLead,
     themeEyebrow: theme.eyebrow,
     sceneCopy: theme.scenes,
+    finalTitle: identity.finalTitle,
+    finalBody: identity.finalBody,
     finalQuestion: theme.finalQuestion,
+    finalNavLabel: identity.finalNavLabel,
+    primaryCta: identity.primaryCta,
+    restartCta: identity.restartCta,
     sceneOrder,
     visualDensity: 0.72 + ((hash >>> 5) % 28) / 100,
     gridSize: 72 + ((hash >>> 9) % 58),
@@ -338,6 +450,7 @@ export const applyDailyVariation = (documentRef = document, date = new Date()) =
   const subtitle = documentRef.querySelector(".hero__subtitle");
   const lead = documentRef.querySelector(".hero__lead");
   const heroEyebrow = documentRef.querySelector(".hero > .eyebrow");
+  const heroCta = documentRef.querySelector(".hero .primary-cta");
   const progress = documentRef.querySelector(".progress-line");
   const story = documentRef.querySelector("[data-story-root]");
 
@@ -359,6 +472,10 @@ export const applyDailyVariation = (documentRef = document, date = new Date()) =
   if (subtitle) subtitle.textContent = variation.heroSubtitle;
   if (lead) lead.textContent = variation.heroLead;
   if (heroEyebrow) heroEyebrow.textContent = variation.themeEyebrow;
+  if (heroCta) heroCta.textContent = variation.primaryCta;
+  documentRef.title = variation.siteTitle;
+  const description = documentRef.querySelector('meta[name="description"]');
+  if (description) description.setAttribute("content", variation.heroLead);
 
   for (const [sceneId, copy] of Object.entries(variation.sceneCopy)) {
     const section = documentRef.querySelector(`[data-scene-id="${sceneId}"]`);
@@ -373,8 +490,14 @@ export const applyDailyVariation = (documentRef = document, date = new Date()) =
     if (visualText) visualText.textContent = copy.visual;
   }
 
+  const finalTitle = documentRef.getElementById("final-title");
+  const finalBody = documentRef.querySelector(".final > p:not(.eyebrow):not(.final__question)");
   const finalQuestion = documentRef.querySelector(".final__question");
+  const restartCta = documentRef.querySelector(".secondary-cta");
+  if (finalTitle) finalTitle.textContent = variation.finalTitle;
+  if (finalBody) finalBody.textContent = variation.finalBody;
   if (finalQuestion) finalQuestion.textContent = variation.finalQuestion;
+  if (restartCta) restartCta.textContent = variation.restartCta;
 
   if (story) {
     const sections = new Map(
@@ -395,7 +518,10 @@ export const applyDailyVariation = (documentRef = document, date = new Date()) =
       if (link) progress.append(link);
     });
     const ocean = links.get("ocean");
-    if (ocean) progress.append(ocean);
+    if (ocean) {
+      ocean.textContent = variation.finalNavLabel;
+      progress.append(ocean);
+    }
   }
 
   documentRef.querySelector("[data-daily-badge]")?.remove();

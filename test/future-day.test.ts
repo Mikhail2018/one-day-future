@@ -68,6 +68,17 @@ describe("daily variation engine", () => {
     expect(first.finalQuestion).not.toBe(second.finalQuestion);
   });
 
+  test("changes the whole site identity, not only the content blocks", () => {
+    const first = createDailyVariation(new Date("2026-06-01T12:00:00Z"));
+    const second = createDailyVariation(new Date("2026-06-02T12:00:00Z"));
+
+    expect(first.siteTitle).not.toBe(second.siteTitle);
+    expect(first.finalTitle).not.toBe(second.finalTitle);
+    expect(first.finalBody).not.toBe(second.finalBody);
+    expect(first.finalNavLabel).not.toBe(second.finalNavLabel);
+    expect(first.primaryCta).not.toBe(second.primaryCta);
+  });
+
   test("has enough full theme packs with copy for every scene", () => {
     expect(dailyThemePacks.length).toBeGreaterThanOrEqual(10);
     for (const theme of dailyThemePacks) {
